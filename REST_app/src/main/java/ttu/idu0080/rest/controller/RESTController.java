@@ -25,45 +25,48 @@ import org.springframework.ui.Model;
 import ttu.idu0080.rest.service.*;
 import ttu.idu0080.rest.data.*;
 
-
 @Controller
 public class RESTController {
-	
+
 	@Autowired
 	private DataService dataService;
 	@Autowired
 	private RESTDataService restDataService;
 
-	@RequestMapping(value="/service/cars",method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Car> getCars(HttpServletResponse response) throws IOException{
-		
+	@RequestMapping(value = "/service/cars", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Car> getCars(HttpServletResponse response)
+			throws IOException {
+
 		List<Car> cars = dataService.getAllCars();
 		return cars;
 	}
-	
-	@RequestMapping(value="/service/car/{id}",method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody Car getCar(@PathVariable int id) throws IOException{
-		
+
+	@RequestMapping(value = "/service/car/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody Car getCar(@PathVariable int id) throws IOException {
+
 		Car car = dataService.getCarById(id);
 		return car;
 	}
-	
+
 	@Transactional
-	@RequestMapping(value = "/service/car/{id}", method=RequestMethod.POST)
-	public @ResponseBody void updateCar(@RequestBody Car car)
-	{
+	@RequestMapping(value = "/service/car/{id}", method = RequestMethod.POST)
+	public @ResponseBody void updateCar(@RequestBody Car car) {
 		dataService.update(car);
-		
+
 	}
-	
-	
-	
-	@RequestMapping(value="/service/external/cars",method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody List<Car> getExternalCars(HttpServletResponse response) throws IOException{
+
+	@RequestMapping(value = "/service/external/cars", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<Car> getExternalCars(HttpServletResponse response)
+			throws IOException {
 		List<Car> cars = restDataService.getAllCars();
 		return cars;
 	}
-	
 
-	
+	// samm 3, lisame DELETE
+	@Transactional
+	@RequestMapping(value = "/service/car/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody void deleteCar(@PathVariable int id) {
+		dataService.delete(id);
+	}
+
 }
