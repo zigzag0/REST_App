@@ -140,6 +140,33 @@ function delete_car(id) {
 	});
 }
 
+// samm 5 Uue auto lisamise võimalus.
+
+function add_car() {
+	var car_to_server = new Car();
+	car_to_server.make = document.forms[0].new_car_make.value;
+	car_to_server.model = document.forms[0].new_car_model.value;
+	car_to_server.series = document.forms[0].new_car_series.value;
+	car_to_server.year = document.forms[0].new_car_year.value;
+	var jsonData = JSON.stringify(car_to_server);
+	$.ajaxSetup({
+		cache : false
+	});
+	$.ajax({
+		url : 'service/car/',
+		type : "PUT",
+		data : jsonData,
+		dataType : 'json',
+		contentType : 'application/json',
+		success : function(data) {
+			show_message("Sisestatud");
+			console.log(JSON.stringify(data));
+			// uuendame autode nimekirja vormil , yks auto on nyyd lisatud
+			get_cars();
+		}
+	});
+}
+
 function show_message(message) {
 
 	$("#msg_text").html(message);

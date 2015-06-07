@@ -69,4 +69,11 @@ public class RESTController {
 		dataService.delete(id);
 	}
 
+	// samm 6 lisame Auto lisamise võimalust
+	@Transactional
+	@RequestMapping(value = "/service/car/", method = RequestMethod.PUT)
+	public @ResponseBody void insertCar(@RequestBody Car car) {
+		dataService.save(car);
+	}
+
 }
